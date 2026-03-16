@@ -38,5 +38,4 @@ public class MovieMapper {
         movie.setDirector(dto.getDirector());
         movie.setDuration(dto.getDuration());
     }
-
 }
