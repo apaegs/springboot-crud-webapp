@@ -11,6 +11,7 @@
 <h1>Edit Movie</h1>
 
 <form action="/movies/${movie.getId()}/edit" method="post">
+    <input type="hidden" name="id" value="${movie.getId()}">
 
     <div>
         <label>Title:</label>
