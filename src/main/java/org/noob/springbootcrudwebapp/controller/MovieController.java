@@ -51,30 +51,26 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    // Visa edit-formuläret
+    // EDIT FORM
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
-        try {
-            MovieDTO movieDTO = service.findById(id);
+        // GlobalExceptionHandler tar hand om IllegalArgumentException om filmen saknas
+        MovieDTO movieDTO = service.findById(id);
 
-            UpdateMovieDTO updateDTO = new UpdateMovieDTO();
-            updateDTO.setId(movieDTO.getId());
-            updateDTO.setTitle(movieDTO.getTitle());
-            updateDTO.setDescription(movieDTO.getDescription());
-            updateDTO.setDirector(movieDTO.getDirector());
-            updateDTO.setReleaseDate(movieDTO.getReleaseDate());
-            updateDTO.setDuration(movieDTO.getDuration());
+        UpdateMovieDTO updateDTO = new UpdateMovieDTO();
+        updateDTO.setId(movieDTO.getId());
+        updateDTO.setTitle(movieDTO.getTitle());
+        updateDTO.setDescription(movieDTO.getDescription());
+        updateDTO.setDirector(movieDTO.getDirector());
+        updateDTO.setReleaseDate(movieDTO.getReleaseDate());
+        updateDTO.setDuration(movieDTO.getDuration());
 
-            model.addAttribute("movie", updateDTO);
-            model.addAttribute("errors", null);
-            return "movies/edit"; // JTE template
-        } catch (IllegalArgumentException e) {
-            // Redirecta till listan med en enkel error-flagga
-            return "redirect:/movies?error=notfound";
-        }
+        model.addAttribute("movie", updateDTO);
+        model.addAttribute("errors", null);
+        return "movies/edit";
     }
 
-    // Hantera POST när formuläret skickas
+    // UPDATE POST
     @PostMapping("/{id}/edit")
     public String updateMovie(@PathVariable Long id,
                               @Valid @ModelAttribute("movie") UpdateMovieDTO dto,
@@ -92,20 +88,14 @@ public class MovieController {
         }
 
         dto.setId(id);
-        service.update(dto);
+        service.update(dto); // IllegalArgumentException → GlobalExceptionHandler
         return "redirect:/movies";
     }
 
     // DELETE
     @PostMapping("/{id}/delete")
     public String deleteMovie(@PathVariable Long id) {
-        try {
-            service.delete(id);
-        } catch (IllegalArgumentException e) {
-            return "redirect:/movies?error=notfound";
-        }
+        service.delete(id); // IllegalArgumentException → GlobalExceptionHandler
         return "redirect:/movies";
     }
-
-
 }
