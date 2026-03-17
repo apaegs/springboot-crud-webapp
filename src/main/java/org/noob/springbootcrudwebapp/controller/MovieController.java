@@ -54,19 +54,24 @@ public class MovieController {
     // Visa edit-formuläret
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
-        MovieDTO movieDTO = service.findById(id);
+        try {
+            MovieDTO movieDTO = service.findById(id);
 
-        UpdateMovieDTO updateDTO = new UpdateMovieDTO();
-        updateDTO.setId(movieDTO.getId());
-        updateDTO.setTitle(movieDTO.getTitle());
-        updateDTO.setDescription(movieDTO.getDescription());
-        updateDTO.setDirector(movieDTO.getDirector());
-        updateDTO.setReleaseDate(movieDTO.getReleaseDate());
-        updateDTO.setDuration(movieDTO.getDuration());
+            UpdateMovieDTO updateDTO = new UpdateMovieDTO();
+            updateDTO.setId(movieDTO.getId());
+            updateDTO.setTitle(movieDTO.getTitle());
+            updateDTO.setDescription(movieDTO.getDescription());
+            updateDTO.setDirector(movieDTO.getDirector());
+            updateDTO.setReleaseDate(movieDTO.getReleaseDate());
+            updateDTO.setDuration(movieDTO.getDuration());
 
-        model.addAttribute("movie", updateDTO);
-        model.addAttribute("errors", null);
-        return "movies/edit";
+            model.addAttribute("movie", updateDTO);
+            model.addAttribute("errors", null);
+            return "movies/edit"; // JTE template
+        } catch (IllegalArgumentException e) {
+            // Redirecta till listan med en enkel error-flagga
+            return "redirect:/movies?error=notfound";
+        }
     }
 
     // Hantera POST när formuläret skickas
@@ -76,12 +81,17 @@ public class MovieController {
                               BindingResult result,
                               Model model) {
 
+        if (dto.getId() != null && !id.equals(dto.getId())) {
+            result.rejectValue("id", "mismatch", "Path id does not match form id");
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("movie", dto);
             model.addAttribute("errors", result);
             return "movies/edit";
         }
 
+        dto.setId(id);
         service.update(dto);
         return "redirect:/movies";
     }
@@ -89,7 +99,11 @@ public class MovieController {
     // DELETE
     @PostMapping("/{id}/delete")
     public String deleteMovie(@PathVariable Long id) {
-        service.delete(id);
+        try {
+            service.delete(id);
+        } catch (IllegalArgumentException e) {
+            return "redirect:/movies?error=notfound";
+        }
         return "redirect:/movies";
     }
 
