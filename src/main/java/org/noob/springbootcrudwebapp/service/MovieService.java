@@ -39,6 +39,12 @@ public class MovieService {
                 .toList();
     }
 
+    public MovieDTO findById(Long id) {
+        Movie movie = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Movie not found with id: " + id));
+        return mapper.toDTO(movie);
+    }
+
     @Transactional
     public MovieDTO update(UpdateMovieDTO dto) {
         Objects.requireNonNull(dto);
