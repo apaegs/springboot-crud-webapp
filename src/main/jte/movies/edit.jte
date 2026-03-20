@@ -2,61 +2,71 @@
 @param org.springframework.validation.BindingResult errors
 
 <!DOCTYPE html>
-<html>
+<html lang="sv">
 <head>
-    <title>Edit Movie</title>
+    <meta charset="UTF-8">
+    <title>Redigera film — CineVault</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<div class="app">
+    <nav>
+        <div class="logo"><span>Cine</span>Vault</div>
+        <a href="/movies" class="btn-primary">← Tillbaka</a>
+    </nav>
 
-<h1>Edit Movie</h1>
+    <div class="page-title">Redigera <span>film</span></div>
+    <div class="subtitle">Uppdatera informationen nedan</div>
 
-<form action="/movies/${movie.getId()}/edit" method="post">
-    <input type="hidden" name="id" value="${movie.getId()}">
+    <div class="form-card">
+        <form action="/movies/${movie.getId()}/edit" method="post">
+            <input type="hidden" name="id" value="${movie.getId()}">
+            <div class="form-grid">
 
-    <div>
-        <label>Title:</label>
-        <input type="text" name="title" value="${movie.getTitle()}">
-        @if (errors != null && errors.hasFieldErrors("title"))
-            <p>${errors.getFieldError("title").getDefaultMessage()}</p>
-        @endif
+                <div class="form-group full">
+                    <label>Titel</label>
+                    <input type="text" name="title" value="${movie.getTitle() != null ? movie.getTitle() : ""}">
+                    @if(errors != null && errors.hasFieldErrors("title"))
+                        <span class="error-msg">${errors.getFieldError("title").getDefaultMessage()}</span>
+                    @endif
+                </div>
+
+                <div class="form-group full">
+                    <label>Beskrivning</label>
+                    <input type="text" name="description" value="${movie.getDescription() != null ? movie.getDescription() : ""}">
+                    @if(errors != null && errors.hasFieldErrors("description"))
+                        <span class="error-msg">${errors.getFieldError("description").getDefaultMessage()}</span>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label>Regissör</label>
+                    <input type="text" name="director" value="${movie.getDirector() != null ? movie.getDirector() : ""}">
+                    @if(errors != null && errors.hasFieldErrors("director"))
+                        <span class="error-msg">${errors.getFieldError("director").getDefaultMessage()}</span>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label>Speltid (min)</label>
+                    <input type="number" name="duration" value="${movie.getDuration()}">
+                    @if(errors != null && errors.hasFieldErrors("duration"))
+                        <span class="error-msg">${errors.getFieldError("duration").getDefaultMessage()}</span>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label>Utgivningsdatum</label>
+                    <input type="date" name="releaseDate" value="${movie.getReleaseDate() != null ? movie.getReleaseDate().toString() : ""}">
+                    @if(errors != null && errors.hasFieldErrors("releaseDate"))
+                        <span class="error-msg">${errors.getFieldError("releaseDate").getDefaultMessage()}</span>
+                    @endif
+                </div>
+
+            </div>
+            <button type="submit" class="btn-submit">Spara ändringar</button>
+        </form>
     </div>
-
-    <div>
-        <label>Description:</label>
-        <input type="text" name="description" value="${movie.getDescription()}">
-        @if (errors != null && errors.hasFieldErrors("description"))
-            <p>${errors.getFieldError("description").getDefaultMessage()}</p>
-        @endif
-    </div>
-
-    <div>
-        <label>Release Date:</label>
-        <input type="date" name="releaseDate" value="${movie.getReleaseDate() != null ? movie.getReleaseDate().toString() : ""}">
-        @if (errors != null && errors.hasFieldErrors("releaseDate"))
-            <p>${errors.getFieldError("releaseDate").getDefaultMessage()}</p>
-        @endif
-    </div>
-
-    <div>
-        <label>Director:</label>
-        <input type="text" name="director" value="${movie.getDirector()}">
-        @if (errors != null && errors.hasFieldErrors("director"))
-            <p>${errors.getFieldError("director").getDefaultMessage()}</p>
-        @endif
-    </div>
-
-    <div>
-        <label>Duration:</label>
-        <input type="number" name="duration" value="${movie.getDuration()}">
-        @if (errors != null && errors.hasFieldErrors("duration"))
-            <p>${errors.getFieldError("duration").getDefaultMessage()}</p>
-        @endif
-    </div>
-
-    <button type="submit">Save</button>
-</form>
-
-<a href="/movies">Back</a>
-
+</div>
 </body>
 </html>
