@@ -5,13 +5,13 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Ny film — CineVault</title>
+    <title>Ny film — FILMBANKEN</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="app">
     <nav>
-        <div class="logo"><span>Cine</span>Vault</div>
+        <div class="logo"><span>FILM</span>BANKEN</div>
         <a href="/movies" class="btn-primary">← Tillbaka</a>
     </nav>
 

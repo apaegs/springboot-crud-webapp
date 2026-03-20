@@ -1,12 +1,11 @@
 @import org.noob.springbootcrudwebapp.dto.MovieDTO
-@import java.time.format.DateTimeFormatter
 @param java.util.List<MovieDTO> movies
 
 <!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Filmer — CineVault</title>
+    <title>Filmer — FILMBANKEN</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
