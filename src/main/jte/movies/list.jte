@@ -1,35 +1,47 @@
 @import org.noob.springbootcrudwebapp.dto.MovieDTO
-@import java.time.format.DateTimeFormatter
-@param java.util.List<org.noob.springbootcrudwebapp.dto.MovieDTO> movies
+@param java.util.List<MovieDTO> movies
 
-<h1>Movies</h1>
-<a href="/movies/new">Add Movie</a>
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Filmer — FILMBANKEN</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app">
+    <nav>
+        <div class="logo"><span>FILM</span>BANKEN</div>
+        <a href="/movies/new" class="btn-primary">+ Ny film</a>
+    </nav>
 
-<table border="1">
-    <tr>
-        <th>Title</th>
-        <th>Director</th>
-        <th>Release Date</th>
-        <th>Duration</th>
-        <th>Actions</th>
-    </tr>
+    <div class="page-title">Alla <span>filmer</span></div>
+    <div class="subtitle">${movies.size()} filmer i databasen</div>
 
-    @for(MovieDTO movie : movies)
-        <tr>
-            <td>${movie.getTitle()}</td>
-            <td>${movie.getDirector()}</td>
-            <td>
-                ${movie.getReleaseDate() != null ? movie.getReleaseDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : ""}
-            </td>
-            <td>${movie.getDuration()}</td>
-            <td>
-                <form action="/movies/${movie.getId()}/edit" method="get" style="display:inline">
-                    <button type="submit">Edit</button>
-                </form>
-                <form action="/movies/${movie.getId()}/delete" method="post" style="display:inline">
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-    @endfor
-</table>
+    <div class="movie-grid">
+        @for(MovieDTO movie : movies)
+            <div class="movie-card">
+                <div class="card-banner" style="background: linear-gradient(90deg, #FF4D6D, #7B2FBE)"></div>
+                <div class="card-body">
+                    <div class="card-title">${movie.getTitle()}</div>
+                    <div class="card-meta">${movie.getDirector()}</div>
+                    <div class="card-description">${movie.getDescription()}</div>
+                    <div style="display:flex; gap:0.4rem">
+                    <span class="badge badge-year">
+    ${movie.getReleaseDate() != null ? String.valueOf(movie.getReleaseDate().getYear()) : ""}
+</span>
+                        <span class="badge badge-duration">${movie.getDuration()} min</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="/movies/${movie.getId()}/edit" class="btn-edit">Redigera</a>
+                        <form action="/movies/${movie.getId()}/delete" method="post" style="flex:1">
+                            <button type="submit" class="btn-delete" style="width:100%">Ta bort</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endfor
+    </div>
+</div>
+</body>
+</html>
