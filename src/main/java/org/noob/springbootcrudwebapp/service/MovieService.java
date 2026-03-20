@@ -4,6 +4,7 @@ import org.noob.springbootcrudwebapp.dto.CreateMovieDTO;
 import org.noob.springbootcrudwebapp.dto.MovieDTO;
 import org.noob.springbootcrudwebapp.dto.UpdateMovieDTO;
 import org.noob.springbootcrudwebapp.entity.Movie;
+import org.noob.springbootcrudwebapp.exception.ResourceNotFoundException;
 import org.noob.springbootcrudwebapp.mapper.MovieMapper;
 import org.noob.springbootcrudwebapp.repository.MovieRepository;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class MovieService {
 
     public MovieDTO findById(Long id) {
         Movie movie = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Movie not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id: " + id));
         return mapper.toDTO(movie);
     }
 
@@ -51,7 +52,7 @@ public class MovieService {
         Objects.requireNonNull(dto.getId());
 
         Movie movie = repository.findById(dto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Movie not found with id: " + dto.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id: " + dto.getId()));
 
         mapper.updateEntity(movie, dto);
 
@@ -63,7 +64,7 @@ public class MovieService {
         Objects.requireNonNull(id);
 
         Movie movie = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Movie not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id: " + id));
 
         repository.delete(movie);
     }
