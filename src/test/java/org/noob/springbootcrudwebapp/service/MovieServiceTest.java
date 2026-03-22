@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -154,5 +153,69 @@ class MovieServiceTest {
 
     // FIND PAGINATED
 
+    @Test
+    void findPaginated_returnsMoviePageDTO() {
+        Pageable pageable = PageRequest.of(0, 9);
+        Page<Movie> page = new PageImpl<>(List.of(movie), pageable, 1);
+
+        when(repository.findAll(pageable)).thenReturn(page);
+        when(mapper.toDTO(movie)).thenReturn(movieDTO);
+
+        MoviePageDTO result = service.findPaginated(0, 9);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1, result.getMovies().size());
+        assertEquals(movieDTO, result.getMovies().get(0));
+    }
+
+    @Test
+    void findPaginated_throwsResourceNotFoundException_whenPageOutOfBounds() {
+        Pageable pageable = PageRequest.of(5, 9);
+        Page<Movie> page = new PageImpl<>(List.of(), pageable, 1);
+
+        when(repository.findAll(pageable)).thenReturn(page);
+
+        assertThrows(ResourceNotFoundException.class, () -> service.findPaginated(5, 9));
+    }
+
     // SEARCH PAGINATED
+
+    @Test
+    void searchPaginated_returnsFilteredResults() {
+        MovieFilterDTO filter = new MovieFilterDTO();
+        filter.setTitle("Inception");
+
+        Pageable pageable = PageRequest.of(0, 9);
+        Page<Movie> page = new PageImpl<>(List.of(movie), pageable, 1);
+
+        when(repository.searchPaginated(
+                eq("Inception"), isNull(), isNull(), isNull(), isNull(), isNull(), eq(pageable)
+        )).thenReturn(page);
+        when(mapper.toDTO(movie)).thenReturn(movieDTO);
+
+        MoviePageDTO result = service.searchPaginated(filter, 0, 9);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(movieDTO, result.getMovies().get(0));
+    }
+
+    @Test
+    void searchPaginated_treatsBlankTitleAsNull() {
+        MovieFilterDTO filter = new MovieFilterDTO();
+        filter.setTitle("   ");
+
+        Pageable pageable = PageRequest.of(0, 9);
+        Page<Movie> page = new PageImpl<>(List.of(), pageable, 0);
+
+        when(repository.searchPaginated(
+                isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), eq(pageable)
+        )).thenReturn(page);
+
+        MoviePageDTO result = service.searchPaginated(filter, 0, 9);
+
+        assertEquals(0, result.getTotalElements());
+        verify(repository).searchPaginated(
+                isNull(), isNull(), isNull(), isNull(), isNull(), isNull(), eq(pageable)
+        );
+    }
 }
