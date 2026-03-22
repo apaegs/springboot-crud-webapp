@@ -5,7 +5,7 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Filmer — CineVault</title>
+    <title>Filmer — FILMBANKEN</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>

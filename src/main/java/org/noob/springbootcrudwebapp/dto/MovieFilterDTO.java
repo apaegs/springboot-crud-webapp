@@ -1,12 +1,15 @@
 package org.noob.springbootcrudwebapp.dto;
 
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class MovieFilterDTO {
 
     private String title;
     private String director;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate from;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate to;
     private Integer minDuration;
     private Integer maxDuration;

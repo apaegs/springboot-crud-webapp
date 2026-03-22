@@ -6,7 +6,7 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Sök filmer — CineVault</title>
+    <title>Sök filmer — FILMBANKEN</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
