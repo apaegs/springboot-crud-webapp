@@ -1,5 +1,5 @@
 @import org.noob.springbootcrudwebapp.dto.MovieDTO
-@param java.util.List<MovieDTO> movies
+@param org.noob.springbootcrudwebapp.dto.MoviePageDTO moviePage
 
 <!DOCTYPE html>
 <html lang="sv">
@@ -19,10 +19,10 @@
     </nav>
 
     <div class="page-title">Alla <span>filmer</span></div>
-    <div class="subtitle">${movies.size()} filmer i databasen</div>
+    <div class="subtitle">${moviePage.getTotalElements()} filmer i databasen</div>
 
     <div class="movie-grid">
-        @for(MovieDTO movie : movies)
+        @for(MovieDTO movie : moviePage.getMovies())
             <div class="movie-card">
                 <div class="card-banner" style="background: linear-gradient(90deg, #FF4D6D, #7B2FBE)"></div>
                 <div class="card-body">
@@ -45,6 +45,19 @@
             </div>
         @endfor
     </div>
+
+    <div class="pagination">
+        @if(moviePage.isHasPrevious())
+            <a href="/movies?page=${moviePage.getCurrentPage() - 1}" class="page-btn">← Föregående</a>
+        @endif
+        <span class="page-info">
+            Sida ${moviePage.getCurrentPage() + 1} av ${moviePage.getTotalPages()}
+        </span>
+        @if(moviePage.isHasNext())
+            <a href="/movies?page=${moviePage.getCurrentPage() + 1}" class="page-btn">Nästa →</a>
+        @endif
+    </div>
+
 </div>
 </body>
 </html>

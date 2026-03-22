@@ -1,5 +1,5 @@
 @import org.noob.springbootcrudwebapp.dto.MovieDTO
-@param java.util.List<MovieDTO> movies
+@param org.noob.springbootcrudwebapp.dto.MoviePageDTO moviePage
 @param org.noob.springbootcrudwebapp.dto.MovieFilterDTO filter
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
     </nav>
 
     <div class="page-title">Sök <span>filmer</span></div>
-    <div class="subtitle">${movies.size()} träffar</div>
+    <div class="subtitle">${moviePage.getTotalElements()} träffar</div>
 
     <form action="/movies/search" method="get" class="filter-form">
         <div class="filter-grid">
@@ -62,7 +62,7 @@
     </form>
 
     <div class="movie-grid">
-        @for(MovieDTO movie : movies)
+        @for(MovieDTO movie : moviePage.getMovies())
             <div class="movie-card">
                 <div class="card-banner" style="background: linear-gradient(90deg, #FF4D6D, #7B2FBE)"></div>
                 <div class="card-body">
@@ -85,6 +85,19 @@
             </div>
         @endfor
     </div>
+
+    <div class="pagination">
+        @if(moviePage.isHasPrevious())
+            <a href="/movies/search?page=${moviePage.getCurrentPage() - 1}&title=${filter.getTitle() != null ? filter.getTitle() : ""}&director=${filter.getDirector() != null ? filter.getDirector() : ""}" class="page-btn">← Föregående</a>
+        @endif
+        <span class="page-info">
+            Sida ${moviePage.getCurrentPage() + 1} av ${moviePage.getTotalPages()}
+        </span>
+        @if(moviePage.isHasNext())
+            <a href="/movies/search?page=${moviePage.getCurrentPage() + 1}&title=${filter.getTitle() != null ? filter.getTitle() : ""}&director=${filter.getDirector() != null ? filter.getDirector() : ""}" class="page-btn">Nästa →</a>
+        @endif
+    </div>
+
 </div>
 </body>
 </html>

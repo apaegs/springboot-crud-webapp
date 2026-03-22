@@ -1,5 +1,9 @@
 package org.noob.springbootcrudwebapp.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.noob.springbootcrudwebapp.dto.MoviePageDTO;
 import org.noob.springbootcrudwebapp.dto.MovieFilterDTO;
 import org.noob.springbootcrudwebapp.dto.CreateMovieDTO;
 import org.noob.springbootcrudwebapp.dto.MovieDTO;
@@ -41,18 +45,47 @@ public class MovieService {
                 .toList();
     }
 
-    public List<MovieDTO> search(MovieFilterDTO filter) {
-        return repository.search(
+    public MoviePageDTO findPaginated(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Movie> moviePage = repository.findAll(pageable);
+
+        List<MovieDTO> movies = moviePage.getContent()
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
+
+        return new MoviePageDTO(
+                movies,
+                moviePage.getNumber(),
+                moviePage.getTotalPages(),
+                moviePage.getTotalElements()
+        );
+    }
+
+    public MoviePageDTO searchPaginated(MovieFilterDTO filter, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Movie> moviePage = repository.searchPaginated(
                 isBlank(filter.getTitle()) ? null : filter.getTitle(),
                 isBlank(filter.getDirector()) ? null : filter.getDirector(),
                 filter.getFrom(),
                 filter.getTo(),
                 filter.getMinDuration(),
-                filter.getMaxDuration()
-        )
+                filter.getMaxDuration(),
+                pageable
+        );
+
+        List<MovieDTO> movies = moviePage.getContent()
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
+
+        return new MoviePageDTO(
+                movies,
+                moviePage.getNumber(),
+                moviePage.getTotalPages(),
+                moviePage.getTotalElements()
+        );
     }
 
     private boolean isBlank(String value) {
