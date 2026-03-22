@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>FILMBANKEN</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero-title span {
+            color: var(--c1);
+        }
+
+        .hero-subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 400px;
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, var(--c1), var(--c4));
+            color: white;
+            border: none;
+            padding: 0.9rem 2.5rem;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+
+        .hero-btn:hover {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <nav>
+        <div class="logo"><span>FILM</span>BANKEN</div>
+        <a href="/movies" class="btn-primary">Utforska filmer</a>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-title">Din personliga<br><span>filmsamling</span></div>
+        <p class="hero-subtitle">Håll koll på dina favoritfilmer. Lägg till, redigera och sök bland alla dina filmer.</p>
+        <a href="/movies" class="hero-btn">Kom igång →</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,7 @@
 @import org.noob.springbootcrudwebapp.dto.MovieDTO
-@param java.util.List<MovieDTO> movies
+@import java.net.URLEncoder
+@import java.nio.charset.StandardCharsets
+@param org.noob.springbootcrudwebapp.dto.MoviePageDTO moviePage
 @param org.noob.springbootcrudwebapp.dto.MovieFilterDTO filter
 
 <!DOCTYPE html>
@@ -20,7 +22,7 @@
     </nav>
 
     <div class="page-title">Sök <span>filmer</span></div>
-    <div class="subtitle">${movies.size()} träffar</div>
+    <div class="subtitle">${moviePage.getTotalElements()} träffar</div>
 
     <form action="/movies/search" method="get" class="filter-form">
         <div class="filter-grid">
@@ -62,7 +64,7 @@
     </form>
 
     <div class="movie-grid">
-        @for(MovieDTO movie : movies)
+        @for(MovieDTO movie : moviePage.getMovies())
             <div class="movie-card">
                 <div class="card-banner" style="background: linear-gradient(90deg, #FF4D6D, #7B2FBE)"></div>
                 <div class="card-body">
@@ -85,6 +87,21 @@
             </div>
         @endfor
     </div>
+
+    <div class="pagination">
+        @if(moviePage.isHasPrevious())
+            <a href="/movies/search?page=${moviePage.getCurrentPage() - 1}&title=${URLEncoder.encode(filter.getTitle() != null ? filter.getTitle() : "", StandardCharsets.UTF_8)}&director=${URLEncoder.encode(filter.getDirector() != null ? filter.getDirector() : "", StandardCharsets.UTF_8)}&from=${URLEncoder.encode(filter.getFrom() != null ? filter.getFrom().toString() : "", StandardCharsets.UTF_8)}&to=${URLEncoder.encode(filter.getTo() != null ? filter.getTo().toString() : "", StandardCharsets.UTF_8)}&minDuration=${URLEncoder.encode(filter.getMinDuration() != null ? String.valueOf(filter.getMinDuration()) : "", StandardCharsets.UTF_8)}&maxDuration=${URLEncoder.encode(filter.getMaxDuration() != null ? String.valueOf(filter.getMaxDuration()) : "", StandardCharsets.UTF_8)}" class="page-btn">← Föregående</a>
+        @endif
+        <span class="page-info">
+            ${moviePage.getTotalPages() > 0
+                ? "Sida " + (moviePage.getCurrentPage() + 1) + " av " + moviePage.getTotalPages()
+                : "Inga sidor att visa"}
+        </span>
+        @if(moviePage.isHasNext())
+            <a href="/movies/search?page=${moviePage.getCurrentPage() + 1}&title=${URLEncoder.encode(filter.getTitle() != null ? filter.getTitle() : "", StandardCharsets.UTF_8)}&director=${URLEncoder.encode(filter.getDirector() != null ? filter.getDirector() : "", StandardCharsets.UTF_8)}&from=${URLEncoder.encode(filter.getFrom() != null ? filter.getFrom().toString() : "", StandardCharsets.UTF_8)}&to=${URLEncoder.encode(filter.getTo() != null ? filter.getTo().toString() : "", StandardCharsets.UTF_8)}&minDuration=${URLEncoder.encode(filter.getMinDuration() != null ? String.valueOf(filter.getMinDuration()) : "", StandardCharsets.UTF_8)}&maxDuration=${URLEncoder.encode(filter.getMaxDuration() != null ? String.valueOf(filter.getMaxDuration()) : "", StandardCharsets.UTF_8)}" class="page-btn">Nästa →</a>
+        @endif
+    </div>
+
 </div>
 </body>
 </html>

@@ -2,17 +2,18 @@ package org.noob.springbootcrudwebapp.controller;
 
 import java.util.List;
 import jakarta.validation.Valid;
-import org.noob.springbootcrudwebapp.dto.CreateMovieDTO;
-import org.noob.springbootcrudwebapp.dto.MovieDTO;
-import org.noob.springbootcrudwebapp.dto.MovieFilterDTO;
-import org.noob.springbootcrudwebapp.dto.UpdateMovieDTO;
+import jakarta.validation.constraints.Min;
+import org.noob.springbootcrudwebapp.dto.*;
 import org.noob.springbootcrudwebapp.service.MovieService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Validated
+
 @RequestMapping("/movies")
 public class MovieController {
 
@@ -24,26 +25,22 @@ public class MovieController {
 
     // LIST ALL
     @GetMapping
-    public String listMovies(Model model) {
-        model.addAttribute("movies", service.findAll());
+    public String listMovies(@RequestParam(defaultValue = "0") @Min(0) int page,
+    Model model) {
+        MoviePageDTO moviePage = service.findPaginated(page, 9);
+        model.addAttribute("moviePage", moviePage);
         return "movies/list";
     }
 
     // SEARCH
     @GetMapping("/search")
     public String searchMovies(@ModelAttribute("filter") MovieFilterDTO filter,
-                               Model model) {
+                               @RequestParam(defaultValue = "0") @Min(0) int page,
+    Model model) {
 
-        boolean hasFilter = !isBlank(filter.getTitle())
-                || !isBlank(filter.getDirector())
-                || filter.getFrom() != null
-                || filter.getTo() != null
-                || filter.getMinDuration() != null
-                || filter.getMaxDuration() != null;
+        MoviePageDTO moviePage = service.searchPaginated(filter, page, 9);
 
-        List<MovieDTO> movies = hasFilter ? service.search(filter) : service.findAll();
-
-        model.addAttribute("movies", movies);
+        model.addAttribute("moviePage", moviePage);
         model.addAttribute("filter", filter);
         return "movies/search";
     }
