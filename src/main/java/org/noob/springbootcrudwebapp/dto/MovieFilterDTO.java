@@ -2,7 +2,7 @@ package org.noob.springbootcrudwebapp.dto;
 
 import java.time.LocalDate;
 
-public class MovieFilterDto {
+public class MovieFilterDTO {
 
     private String title;
     private String director;
@@ -11,7 +11,7 @@ public class MovieFilterDto {
     private Integer minDuration;
     private Integer maxDuration;
 
-    public MovieFilterDto() {}
+    public MovieFilterDTO() {}
 
     public String getTitle() {
         return title;

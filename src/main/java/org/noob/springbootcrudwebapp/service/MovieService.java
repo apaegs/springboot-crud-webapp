@@ -1,6 +1,6 @@
 package org.noob.springbootcrudwebapp.service;
 
-import org.noob.springbootcrudwebapp.dto.MovieFilterDto;
+import org.noob.springbootcrudwebapp.dto.MovieFilterDTO;
 import org.noob.springbootcrudwebapp.dto.CreateMovieDTO;
 import org.noob.springbootcrudwebapp.dto.MovieDTO;
 import org.noob.springbootcrudwebapp.dto.UpdateMovieDTO;
@@ -41,7 +41,7 @@ public class MovieService {
                 .toList();
     }
 
-    public List<MovieDTO> search(MovieFilterDto filter) {
+    public List<MovieDTO> search(MovieFilterDTO filter) {
         return repository.search(
                 isBlank(filter.getTitle()) ? null : filter.getTitle(),
                 isBlank(filter.getDirector()) ? null : filter.getDirector(),

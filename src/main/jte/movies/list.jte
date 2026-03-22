@@ -5,14 +5,17 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Filmer — FILMBANKEN</title>
+    <title>Filmer — CineVault</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="app">
     <nav>
         <div class="logo"><span>FILM</span>BANKEN</div>
-        <a href="/movies/new" class="btn-primary">+ Ny film</a>
+        <div style="display:flex; gap:0.5rem">
+            <a href="/movies/search" class="btn-search">Sök filmer</a>
+            <a href="/movies/new" class="btn-primary">+ Ny film</a>
+        </div>
     </nav>
 
     <div class="page-title">Alla <span>filmer</span></div>
@@ -27,9 +30,9 @@
                     <div class="card-meta">${movie.getDirector()}</div>
                     <div class="card-description">${movie.getDescription()}</div>
                     <div style="display:flex; gap:0.4rem">
-                    <span class="badge badge-year">
-    ${movie.getReleaseDate() != null ? String.valueOf(movie.getReleaseDate().getYear()) : ""}
-</span>
+                        <span class="badge badge-year">
+                            ${movie.getReleaseDate() != null ? String.valueOf(movie.getReleaseDate().getYear()) : ""}
+                        </span>
                         <span class="badge badge-duration">${movie.getDuration()} min</span>
                     </div>
                     <div class="card-actions">
