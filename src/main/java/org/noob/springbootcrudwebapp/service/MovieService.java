@@ -49,6 +49,10 @@ public class MovieService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Movie> moviePage = repository.findAll(pageable);
 
+        if (page >= moviePage.getTotalPages() && moviePage.getTotalPages() > 0) {
+            throw new ResourceNotFoundException("Page " + page + " does not exist.");
+        }
+
         List<MovieDTO> movies = moviePage.getContent()
                 .stream()
                 .map(mapper::toDTO)
@@ -74,6 +78,10 @@ public class MovieService {
                 filter.getMaxDuration(),
                 pageable
         );
+
+        if (page >= moviePage.getTotalPages() && moviePage.getTotalPages() > 0) {
+            throw new ResourceNotFoundException("Page " + page + " does not exist.");
+        }
 
         List<MovieDTO> movies = moviePage.getContent()
                 .stream()
