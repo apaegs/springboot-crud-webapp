@@ -38,12 +38,6 @@ public class MovieService {
         return mapper.toDTO(saved);
     }
 
-    public List<MovieDTO> findAll() {
-        return repository.findAll()
-                .stream()
-                .map(mapper::toDTO)
-                .toList();
-    }
 
     public MoviePageDTO findPaginated(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
