@@ -88,13 +88,13 @@
 
     <div class="pagination">
         @if(moviePage.isHasPrevious())
-            <a href="/movies/search?page=${moviePage.getCurrentPage() - 1}&title=${filter.getTitle() != null ? filter.getTitle() : ""}&director=${filter.getDirector() != null ? filter.getDirector() : ""}" class="page-btn">← Föregående</a>
+            <a href="/movies/search?page=${moviePage.getCurrentPage() - 1}&title=${filter.getTitle() != null ? filter.getTitle() : ""}&director=${filter.getDirector() != null ? filter.getDirector() : ""}&from=${filter.getFrom() != null ? filter.getFrom().toString() : ""}&to=${filter.getTo() != null ? filter.getTo().toString() : ""}&minDuration=${filter.getMinDuration() != null ? String.valueOf(filter.getMinDuration()) : ""}&maxDuration=${filter.getMaxDuration() != null ? String.valueOf(filter.getMaxDuration()) : ""}" class="page-btn">← Föregående</a>
         @endif
         <span class="page-info">
-            Sida ${moviePage.getCurrentPage() + 1} av ${moviePage.getTotalPages()}
-        </span>
+        Sida ${moviePage.getCurrentPage() + 1} av ${moviePage.getTotalPages()}
+    </span>
         @if(moviePage.isHasNext())
-            <a href="/movies/search?page=${moviePage.getCurrentPage() + 1}&title=${filter.getTitle() != null ? filter.getTitle() : ""}&director=${filter.getDirector() != null ? filter.getDirector() : ""}" class="page-btn">Nästa →</a>
+            <a href="/movies/search?page=${moviePage.getCurrentPage() + 1}&title=${filter.getTitle() != null ? filter.getTitle() : ""}&director=${filter.getDirector() != null ? filter.getDirector() : ""}&from=${filter.getFrom() != null ? filter.getFrom().toString() : ""}&to=${filter.getTo() != null ? filter.getTo().toString() : ""}&minDuration=${filter.getMinDuration() != null ? String.valueOf(filter.getMinDuration()) : ""}&maxDuration=${filter.getMaxDuration() != null ? String.valueOf(filter.getMaxDuration()) : ""}" class="page-btn">Nästa →</a>
         @endif
     </div>
 

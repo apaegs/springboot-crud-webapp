@@ -2,14 +2,18 @@ package org.noob.springbootcrudwebapp.controller;
 
 import java.util.List;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.noob.springbootcrudwebapp.dto.*;
 import org.noob.springbootcrudwebapp.service.MovieService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Validated
+
 @RequestMapping("/movies")
 public class MovieController {
 
@@ -21,8 +25,8 @@ public class MovieController {
 
     // LIST ALL
     @GetMapping
-    public String listMovies(@RequestParam(defaultValue = "0") int page,
-                             Model model) {
+    public String listMovies(@RequestParam(defaultValue = "0") @Min(0) int page,
+    Model model) {
         MoviePageDTO moviePage = service.findPaginated(page, 9);
         model.addAttribute("moviePage", moviePage);
         return "movies/list";
@@ -31,8 +35,8 @@ public class MovieController {
     // SEARCH
     @GetMapping("/search")
     public String searchMovies(@ModelAttribute("filter") MovieFilterDTO filter,
-                               @RequestParam(defaultValue = "0") int page,
-                               Model model) {
+                               @RequestParam(defaultValue = "0") @Min(0) int page,
+    Model model) {
 
         MoviePageDTO moviePage = service.searchPaginated(filter, page, 9);
 

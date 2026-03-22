@@ -51,7 +51,9 @@
             <a href="/movies?page=${moviePage.getCurrentPage() - 1}" class="page-btn">← Föregående</a>
         @endif
         <span class="page-info">
-            Sida ${moviePage.getCurrentPage() + 1} av ${moviePage.getTotalPages()}
+            ${moviePage.getTotalPages() > 0
+                ? "Sida " + (moviePage.getCurrentPage() + 1) + " av " + moviePage.getTotalPages()
+                : "Inga sidor att visa"}
         </span>
         @if(moviePage.isHasNext())
             <a href="/movies?page=${moviePage.getCurrentPage() + 1}" class="page-btn">Nästa →</a>
