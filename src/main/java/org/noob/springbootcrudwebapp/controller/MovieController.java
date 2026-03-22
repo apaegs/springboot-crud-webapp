@@ -1,8 +1,10 @@
 package org.noob.springbootcrudwebapp.controller;
 
+import java.util.List;
 import jakarta.validation.Valid;
 import org.noob.springbootcrudwebapp.dto.CreateMovieDTO;
 import org.noob.springbootcrudwebapp.dto.MovieDTO;
+import org.noob.springbootcrudwebapp.dto.MovieFilterDTO;
 import org.noob.springbootcrudwebapp.dto.UpdateMovieDTO;
 import org.noob.springbootcrudwebapp.service.MovieService;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,29 @@ public class MovieController {
     public String listMovies(Model model) {
         model.addAttribute("movies", service.findAll());
         return "movies/list";
+    }
+
+    // SEARCH
+    @GetMapping("/search")
+    public String searchMovies(@ModelAttribute("filter") MovieFilterDTO filter,
+                               Model model) {
+
+        boolean hasFilter = !isBlank(filter.getTitle())
+                || !isBlank(filter.getDirector())
+                || filter.getFrom() != null
+                || filter.getTo() != null
+                || filter.getMinDuration() != null
+                || filter.getMaxDuration() != null;
+
+        List<MovieDTO> movies = hasFilter ? service.search(filter) : service.findAll();
+
+        model.addAttribute("movies", movies);
+        model.addAttribute("filter", filter);
+        return "movies/search";
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.isBlank();
     }
 
     // FORM
