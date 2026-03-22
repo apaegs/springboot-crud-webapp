@@ -94,6 +94,7 @@ class MovieMapperTest {
 
         mapper.updateEntity(movie, dto);
 
+        assertEquals(1L, movie.getId());
         assertEquals("Inception", movie.getTitle());
         assertEquals("A mind-bending thriller", movie.getDescription());
         assertEquals("Christopher Nolan", movie.getDirector());
