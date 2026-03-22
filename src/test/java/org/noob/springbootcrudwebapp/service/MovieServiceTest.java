@@ -131,6 +131,27 @@ class MovieServiceTest {
 
     // DELETE
 
+    @Test
+    void delete_deleteMovie_whenExists() {
+        when(repository.findById(1L)).thenReturn(Optional.of(movie));
+
+        service.delete(1L);
+
+        verify(repository).delete(movie);
+    }
+
+    @Test
+    void delete_throwsResourceNotFoundException_whenMovieNotFound() {
+        when(repository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> service.delete(99L));
+    }
+
+    @Test
+    void delete_throwsWhenIdIsNull() {
+        assertThrows(NullPointerException.class, () -> service.delete(null));
+    }
+
     // FIND PAGINATED
 
     // SEARCH PAGINATED
