@@ -1,5 +1,6 @@
 package org.noob.springbootcrudwebapp.service;
 
+import org.noob.springbootcrudwebapp.dto.MovieFilterDto;
 import org.noob.springbootcrudwebapp.dto.CreateMovieDTO;
 import org.noob.springbootcrudwebapp.dto.MovieDTO;
 import org.noob.springbootcrudwebapp.dto.UpdateMovieDTO;
@@ -38,6 +39,24 @@ public class MovieService {
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
+    }
+
+    public List<MovieDTO> search(MovieFilterDto filter) {
+        return repository.search(
+                isBlank(filter.getTitle()) ? null : filter.getTitle(),
+                isBlank(filter.getDirector()) ? null : filter.getDirector(),
+                filter.getFrom(),
+                filter.getTo(),
+                filter.getMinDuration(),
+                filter.getMaxDuration()
+        )
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.isBlank();
     }
 
     public MovieDTO findById(Long id) {
