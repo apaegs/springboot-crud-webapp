@@ -1,4 +1,6 @@
 @import org.noob.springbootcrudwebapp.dto.MovieDTO
+@import java.net.URLEncoder
+@import java.nio.charset.StandardCharsets
 @param org.noob.springbootcrudwebapp.dto.MoviePageDTO moviePage
 @param org.noob.springbootcrudwebapp.dto.MovieFilterDTO filter
 
@@ -88,13 +90,15 @@
 
     <div class="pagination">
         @if(moviePage.isHasPrevious())
-            <a href="/movies/search?page=${moviePage.getCurrentPage() - 1}&title=${filter.getTitle() != null ? filter.getTitle() : ""}&director=${filter.getDirector() != null ? filter.getDirector() : ""}&from=${filter.getFrom() != null ? filter.getFrom().toString() : ""}&to=${filter.getTo() != null ? filter.getTo().toString() : ""}&minDuration=${filter.getMinDuration() != null ? String.valueOf(filter.getMinDuration()) : ""}&maxDuration=${filter.getMaxDuration() != null ? String.valueOf(filter.getMaxDuration()) : ""}" class="page-btn">← Föregående</a>
+            <a href="/movies/search?page=${moviePage.getCurrentPage() - 1}&title=${URLEncoder.encode(filter.getTitle() != null ? filter.getTitle() : "", StandardCharsets.UTF_8)}&director=${URLEncoder.encode(filter.getDirector() != null ? filter.getDirector() : "", StandardCharsets.UTF_8)}&from=${URLEncoder.encode(filter.getFrom() != null ? filter.getFrom().toString() : "", StandardCharsets.UTF_8)}&to=${URLEncoder.encode(filter.getTo() != null ? filter.getTo().toString() : "", StandardCharsets.UTF_8)}&minDuration=${URLEncoder.encode(filter.getMinDuration() != null ? String.valueOf(filter.getMinDuration()) : "", StandardCharsets.UTF_8)}&maxDuration=${URLEncoder.encode(filter.getMaxDuration() != null ? String.valueOf(filter.getMaxDuration()) : "", StandardCharsets.UTF_8)}" class="page-btn">← Föregående</a>
         @endif
         <span class="page-info">
-        Sida ${moviePage.getCurrentPage() + 1} av ${moviePage.getTotalPages()}
-    </span>
+            ${moviePage.getTotalPages() > 0
+                ? "Sida " + (moviePage.getCurrentPage() + 1) + " av " + moviePage.getTotalPages()
+                : "Inga sidor att visa"}
+        </span>
         @if(moviePage.isHasNext())
-            <a href="/movies/search?page=${moviePage.getCurrentPage() + 1}&title=${filter.getTitle() != null ? filter.getTitle() : ""}&director=${filter.getDirector() != null ? filter.getDirector() : ""}&from=${filter.getFrom() != null ? filter.getFrom().toString() : ""}&to=${filter.getTo() != null ? filter.getTo().toString() : ""}&minDuration=${filter.getMinDuration() != null ? String.valueOf(filter.getMinDuration()) : ""}&maxDuration=${filter.getMaxDuration() != null ? String.valueOf(filter.getMaxDuration()) : ""}" class="page-btn">Nästa →</a>
+            <a href="/movies/search?page=${moviePage.getCurrentPage() + 1}&title=${URLEncoder.encode(filter.getTitle() != null ? filter.getTitle() : "", StandardCharsets.UTF_8)}&director=${URLEncoder.encode(filter.getDirector() != null ? filter.getDirector() : "", StandardCharsets.UTF_8)}&from=${URLEncoder.encode(filter.getFrom() != null ? filter.getFrom().toString() : "", StandardCharsets.UTF_8)}&to=${URLEncoder.encode(filter.getTo() != null ? filter.getTo().toString() : "", StandardCharsets.UTF_8)}&minDuration=${URLEncoder.encode(filter.getMinDuration() != null ? String.valueOf(filter.getMinDuration()) : "", StandardCharsets.UTF_8)}&maxDuration=${URLEncoder.encode(filter.getMaxDuration() != null ? String.valueOf(filter.getMaxDuration()) : "", StandardCharsets.UTF_8)}" class="page-btn">Nästa →</a>
         @endif
     </div>
 
