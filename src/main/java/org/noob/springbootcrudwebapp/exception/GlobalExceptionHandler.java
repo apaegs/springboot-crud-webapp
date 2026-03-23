@@ -23,4 +23,11 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorMessage", "Ogiltig förfrågan: " + ex.getMessage());
         return "movies/bad-request";
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleIllegalArgument(IllegalArgumentException ex, Model model) {
+        model.addAttribute("errorMessage", "Ogiltig förfrågan: " + ex.getMessage());
+        return "movies/bad-request";
+    }
 }
