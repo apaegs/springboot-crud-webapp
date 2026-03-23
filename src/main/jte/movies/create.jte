@@ -11,7 +11,7 @@
 <body>
 <div class="app">
     <nav>
-        <div class="logo"><span>FILM</span>BANKEN</div>
+        <a href="/" class="logo"><span>FILM</span>BANKEN</a>
         <a href="/movies" class="btn-primary">← Tillbaka</a>
     </nav>
 

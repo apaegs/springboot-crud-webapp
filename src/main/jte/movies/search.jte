@@ -14,7 +14,7 @@
 <body>
 <div class="app">
     <nav>
-        <div class="logo"><span>FILM</span>BANKEN</div>
+        <a href="/" class="logo"><span>FILM</span>BANKEN</a>
         <div style="display:flex; gap:0.5rem">
             <a href="/movies" class="btn-search">← Alla filmer</a>
             <a href="/movies/new" class="btn-primary">+ Ny film</a>
