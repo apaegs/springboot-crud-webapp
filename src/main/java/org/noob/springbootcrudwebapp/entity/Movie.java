@@ -11,19 +11,19 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Titel får inte vara tom")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Beskrivning får inte vara tom")
     private String description;
 
-    @PastOrPresent
+    @PastOrPresent(message = "Utgivningsdatum får inte vara i framtiden")
     private LocalDate releaseDate;
 
-    @NotBlank
+    @NotBlank(message = "Regissör får inte vara tom")
     private String director;
 
-    @Min(1)
+    @Min(value = 1, message = "Speltid måste vara minst 1 minut")
     private int duration;
 
     public Movie() {
