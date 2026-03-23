@@ -273,7 +273,7 @@ input:focus {
 }
 
 /* NOT FOUND */
-.not-found-box {
+.error-box-box {
     text-align: center;
     padding: 4rem 2rem;
     background: var(--surface);
@@ -281,7 +281,7 @@ input:focus {
     border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.not-found-box h1 {
+.error-box h1 {
     font-family: 'Poppins', sans-serif;
     font-size: 2rem;
     color: var(--c1);
