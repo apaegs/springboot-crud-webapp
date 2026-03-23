@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"title", "release_date"}))
 public class Movie {
 
     @Id

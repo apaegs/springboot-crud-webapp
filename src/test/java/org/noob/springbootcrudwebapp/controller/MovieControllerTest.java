@@ -8,6 +8,7 @@ import org.noob.springbootcrudwebapp.exception.ResourceNotFoundException;
 import org.noob.springbootcrudwebapp.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -108,6 +109,22 @@ class MovieControllerTest {
                 .andExpect(view().name("movies/create"))
                 .andExpect(model().attributeExists("errors"))
                 .andExpect(model().hasErrors());
+    }
+
+    @Test
+    void createMovie_returnsBadRequest_whenDuplicateEntry() throws Exception {
+        when(service.create(any(CreateMovieDTO.class)))
+                .thenThrow(new DataIntegrityViolationException("Duplicate entry"));
+
+        mockMvc.perform(post("/movies")
+                        .param("title", "Inception")
+                        .param("description", "A mind-bending thriller")
+                        .param("director", "Christopher Nolan")
+                        .param("duration", "148")
+                        .param("releaseDate", "2010-07-16"))
+                .andExpect(status().isConflict())
+                .andExpect(view().name("movies/bad-request"))
+                .andExpect(model().attributeExists("errorMessage"));
     }
 
     // GET /movies/{id}

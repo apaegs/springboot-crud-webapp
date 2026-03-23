@@ -1,6 +1,7 @@
 package org.noob.springbootcrudwebapp.exception;
 
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,6 +29,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleIllegalArgument(IllegalArgumentException ex, Model model) {
         model.addAttribute("errorMessage", "Ogiltig förfrågan: " + ex.getMessage());
+        return "movies/bad-request";
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleDuplicateEntry(DataIntegrityViolationException ex, Model model) {
+        model.addAttribute("errorMessage", "En film med den titeln och det utgivningsdatumet finns redan.");
         return "movies/bad-request";
     }
 }
