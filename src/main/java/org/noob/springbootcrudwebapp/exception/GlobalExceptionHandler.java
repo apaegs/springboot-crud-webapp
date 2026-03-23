@@ -21,6 +21,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleConstraintViolation(ConstraintViolationException ex, Model model) {
         model.addAttribute("errorMessage", "Ogiltig förfrågan: " + ex.getMessage());
-        return "movies/not-found";
+        return "movies/bad-request";
     }
 }

@@ -105,7 +105,7 @@ class MovieControllerTest {
                         .param("director", "")
                         .param("duration", "0"))
                 .andExpect(status().isBadRequest())
-                .andExpect(view().name("movies/not-found"))
+                .andExpect(view().name("movies/bad-request"))
                 .andExpect(model().attributeExists("errorMessage"));
     }
 
@@ -157,7 +157,7 @@ class MovieControllerTest {
                         .param("director", "")
                         .param("duration", "0"))
                 .andExpect(status().isBadRequest())
-                .andExpect(view().name("movies/not-found"))
+                .andExpect(view().name("movies/bad-request"))
                 .andExpect(model().attributeExists("errorMessage"));
     }
 
