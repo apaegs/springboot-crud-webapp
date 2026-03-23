@@ -489,3 +489,36 @@ input:focus {
     font-size: 0.875rem;
     font-variant-numeric: tabular-nums;
 }
+
+/* Klickbara filmkort */
+a.movie-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
+}
+
+a.movie-card:hover {
+    transform: translateY(-4px);
+    transition: transform 0.2s ease;
+}
+
+/* Detaljsida */
+.detail-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.detail-group label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.detail-group p {
+    font-size: 1rem;
+    margin: 0;
+}

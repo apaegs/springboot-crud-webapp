@@ -98,14 +98,37 @@ class MovieControllerTest {
     }
 
     @Test
-    void createMovie_returnsBadRequestView_whenInvalid() throws Exception {
+    void createMovie_returnsCreateView_whenInvalid() throws Exception {
         mockMvc.perform(post("/movies")
                         .param("title", "")
                         .param("description", "")
                         .param("director", "")
                         .param("duration", "0"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("movies/bad-request"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("movies/create"))
+                .andExpect(model().attributeExists("errors"))
+                .andExpect(model().hasErrors());
+    }
+
+    // GET /movies/{id}
+
+    @Test
+    void showDetail_returnsDetailView_whenMovieExists() throws Exception {
+        when(service.findById(1L)).thenReturn(movieDTO);
+
+        mockMvc.perform(get("/movies/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("movies/detail"))
+                .andExpect(model().attributeExists("movie"));
+    }
+
+    @Test
+    void showDetail_returnsNotFoundView_whenMovieNotFound() throws Exception {
+        when(service.findById(99L)).thenThrow(new ResourceNotFoundException("Movie not found with id: 99"));
+
+        mockMvc.perform(get("/movies/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("movies/not-found"))
                 .andExpect(model().attributeExists("errorMessage"));
     }
 
@@ -149,16 +172,17 @@ class MovieControllerTest {
     }
 
     @Test
-    void updateMovie_returnsBadRequestView_whenInvalid() throws Exception {
+    void updateMovie_returnsEditView_whenInvalid() throws Exception {
         mockMvc.perform(post("/movies/1/edit")
                         .param("id", "1")
                         .param("title", "")
                         .param("description", "")
                         .param("director", "")
                         .param("duration", "0"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("movies/bad-request"))
-                .andExpect(model().attributeExists("errorMessage"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("movies/edit"))
+                .andExpect(model().attributeExists("errors"))
+                .andExpect(model().hasErrors());
     }
 
     // POST /movies/{id}/delete
