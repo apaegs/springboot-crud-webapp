@@ -101,7 +101,7 @@ public class MovieController {
                               Model model) {
 
         if (dto.getId() != null && !id.equals(dto.getId())) {
-            result.rejectValue("id", "mismatch", "Path id does not match form id");
+            result.rejectValue("id", "mismatch", "Sökvägs-ID matchar inte formulär-ID");
         }
 
         if (result.hasErrors()) {
