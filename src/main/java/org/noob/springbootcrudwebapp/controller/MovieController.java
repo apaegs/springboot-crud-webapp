@@ -85,6 +85,14 @@ public class MovieController {
         return "movies/edit";
     }
 
+    // DETAIL
+    @GetMapping("/{id}")
+    public String showDetail(@PathVariable Long id, Model model) {
+        MovieDTO movieDTO = service.findById(id);
+        model.addAttribute("movie", movieDTO);
+        return "movies/detail";
+    }
+
     // UPDATE POST
     @PostMapping("/{id}/edit")
     public String updateMovie(@PathVariable Long id,

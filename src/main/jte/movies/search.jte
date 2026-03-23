@@ -65,26 +65,20 @@
 
     <div class="movie-grid">
         @for(MovieDTO movie : moviePage.getMovies())
-            <div class="movie-card">
+            <a href="/movies/${movie.getId()}" class="movie-card">
                 <div class="card-banner" style="background: linear-gradient(90deg, #FF4D6D, #7B2FBE)"></div>
                 <div class="card-body">
                     <div class="card-title">${movie.getTitle()}</div>
                     <div class="card-meta">${movie.getDirector()}</div>
                     <div class="card-description">${movie.getDescription()}</div>
                     <div style="display:flex; gap:0.4rem">
-                        <span class="badge badge-year">
-                            ${movie.getReleaseDate() != null ? String.valueOf(movie.getReleaseDate().getYear()) : ""}
-                        </span>
+            <span class="badge badge-year">
+                ${movie.getReleaseDate() != null ? String.valueOf(movie.getReleaseDate().getYear()) : ""}
+            </span>
                         <span class="badge badge-duration">${movie.getDuration()} min</span>
                     </div>
-                    <div class="card-actions">
-                        <a href="/movies/${movie.getId()}/edit" class="btn-edit">Redigera</a>
-                        <form action="/movies/${movie.getId()}/delete" method="post" style="flex:1">
-                            <button type="submit" class="btn-delete" style="width:100%">Ta bort</button>
-                        </form>
-                    </div>
                 </div>
-            </div>
+            </a>
         @endfor
     </div>
 

@@ -64,7 +64,15 @@
                 </div>
 
             </div>
-            <button type="submit" class="btn-submit">Spara ändringar</button>
+            <button type="submit" class="btn-submit"
+                    onclick="return confirm('Är du säker på att du vill spara ändringarna?')">
+                Spara ändringar
+            </button>
+        </form>
+        <form action="/movies/${movie.getId()}/delete" method="post"
+              style="margin-top: 1rem"
+              onsubmit="return confirm('Är du säker på att du vill ta bort ${movie.getTitle()}?')">
+            <button type="submit" class="btn-delete" style="width:100%">Ta bort film</button>
         </form>
     </div>
 </div>
