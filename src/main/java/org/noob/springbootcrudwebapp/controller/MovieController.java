@@ -1,6 +1,5 @@
 package org.noob.springbootcrudwebapp.controller;
 
-import java.util.List;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.noob.springbootcrudwebapp.dto.*;
