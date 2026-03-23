@@ -1,6 +1,5 @@
 package org.noob.springbootcrudwebapp.controller;
 
-import java.util.List;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.noob.springbootcrudwebapp.dto.*;
@@ -12,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Validated
 
 @RequestMapping("/movies")
 public class MovieController {

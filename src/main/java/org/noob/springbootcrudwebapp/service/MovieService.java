@@ -38,7 +38,6 @@ public class MovieService {
         return mapper.toDTO(saved);
     }
 
-
     public MoviePageDTO findPaginated(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Movie> moviePage = repository.findAll(pageable);
