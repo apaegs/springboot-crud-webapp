@@ -98,15 +98,16 @@ class MovieControllerTest {
     }
 
     @Test
-    void createMovie_returnsBadRequest_whenInvalid() throws Exception {
+    void createMovie_returnsCreateView_whenInvalid() throws Exception {
         mockMvc.perform(post("/movies")
                         .param("title", "")
                         .param("description", "")
                         .param("director", "")
                         .param("duration", "0"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("movies/bad-request"))
-                .andExpect(model().attributeExists("errorMessage"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("movies/create"))
+                .andExpect(model().attributeExists("errors"))
+                .andExpect(model().hasErrors());
     }
 
     // GET /movies/{id}/edit
@@ -149,16 +150,17 @@ class MovieControllerTest {
     }
 
     @Test
-    void updateMovie_returnsBadRequest_whenInvalid() throws Exception {
+    void updateMovie_returnsEditView_whenInvalid() throws Exception {
         mockMvc.perform(post("/movies/1/edit")
                         .param("id", "1")
                         .param("title", "")
                         .param("description", "")
                         .param("director", "")
                         .param("duration", "0"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("movies/bad-request"))
-                .andExpect(model().attributeExists("errorMessage"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("movies/edit"))
+                .andExpect(model().attributeExists("errors"))
+                .andExpect(model().hasErrors());
     }
 
     // POST /movies/{id}/delete
