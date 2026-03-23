@@ -15,7 +15,7 @@
     </nav>
 
     <div class="error-box">
-        <h1>400</h1>
+        <h1>Oops!</h1>
         <p style="color: var(--muted); margin-bottom: 1.5rem">${errorMessage}</p>
         <a href="/movies" class="btn-primary">Gå till filmlistan</a>
     </div>
