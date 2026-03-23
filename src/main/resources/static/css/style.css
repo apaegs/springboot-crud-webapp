@@ -272,8 +272,8 @@ input:focus {
     margin-top: 0.2rem;
 }
 
-/* NOT FOUND */
-.error-box-box {
+/* NOT FOUND / BAD REQUEST */
+.error-box {
     text-align: center;
     padding: 4rem 2rem;
     background: var(--surface);
