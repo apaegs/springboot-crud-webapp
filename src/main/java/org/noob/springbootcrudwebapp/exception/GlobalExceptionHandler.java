@@ -35,7 +35,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleDuplicateEntry(DataIntegrityViolationException ex, Model model) {
-        model.addAttribute("errorMessage", "En film med den titeln och det utgivningsdatumet finns redan.");
+        Throwable cause = ex.getRootCause();
+        String message = cause != null ? cause.getMessage() : "";
+
+        if (message.contains("UKb9ll999v8vsxv0pux3eqryaf8") || message.contains("title")) {
+            model.addAttribute("errorMessage", "En film med den titeln och det utgivningsdatumet finns redan.");
+        } else {
+            model.addAttribute("errorMessage", "Databasfel: begäran kunde inte slutföras.");
+        }
+
         return "movies/bad-request";
     }
 }

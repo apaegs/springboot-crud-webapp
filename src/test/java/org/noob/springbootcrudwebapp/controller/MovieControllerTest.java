@@ -112,7 +112,7 @@ class MovieControllerTest {
     }
 
     @Test
-    void createMovie_returnsBadRequest_whenDuplicateEntry() throws Exception {
+    void createMovie_returnsConflict_whenDuplicateEntry() throws Exception {
         when(service.create(any(CreateMovieDTO.class)))
                 .thenThrow(new DataIntegrityViolationException("Duplicate entry"));
 
