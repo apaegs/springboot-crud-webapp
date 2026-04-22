@@ -2,28 +2,28 @@
 @param org.springframework.validation.BindingResult errors
 
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ny film — FILMBANKEN</title>
+    <title>New movie — MOVIE BANK</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="app">
     <nav>
-        <a href="/" class="logo"><span>FILM</span>BANKEN</a>
-        <a href="/movies" class="btn-primary">← Tillbaka</a>
+        <a href="/" class="logo"><span>MOVIE</span>BANK</a>
+        <a href="/movies" class="btn-primary">← Back</a>
     </nav>
 
-    <div class="page-title">Ny <span>film</span></div>
-    <div class="subtitle">Fyll i informationen nedan</div>
+    <div class="page-title">New <span>movie</span></div>
+    <div class="subtitle">Fill in the information below</div>
 
     <div class="form-card">
         <form action="/movies" method="post">
             <div class="form-grid">
 
                 <div class="form-group full">
-                    <label>Titel</label>
+                    <label>Title</label>
                     <input type="text" name="title" value="${movie.getTitle() != null ? movie.getTitle() : ""}">
                     @if(errors != null && errors.hasFieldErrors("title"))
                         <span class="error-msg">${errors.getFieldError("title").getDefaultMessage()}</span>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="form-group full">
-                    <label>Beskrivning</label>
+                    <label>Description</label>
                     <input type="text" name="description" value="${movie.getDescription() != null ? movie.getDescription() : ""}">
                     @if(errors != null && errors.hasFieldErrors("description"))
                         <span class="error-msg">${errors.getFieldError("description").getDefaultMessage()}</span>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Regissör</label>
+                    <label>Director</label>
                     <input type="text" name="director" value="${movie.getDirector() != null ? movie.getDirector() : ""}">
                     @if(errors != null && errors.hasFieldErrors("director"))
                         <span class="error-msg">${errors.getFieldError("director").getDefaultMessage()}</span>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Speltid (min)</label>
+                    <label>Runtime (min)</label>
                     <input type="number" name="duration" value="${movie.getDuration()}">
                     @if(errors != null && errors.hasFieldErrors("duration"))
                         <span class="error-msg">${errors.getFieldError("duration").getDefaultMessage()}</span>
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Utgivningsdatum</label>
+                    <label>Release date</label>
                     <input type="date" name="releaseDate" value="${movie.getReleaseDate() != null ? movie.getReleaseDate().toString() : ""}">
                     @if(errors != null && errors.hasFieldErrors("releaseDate"))
                         <span class="error-msg">${errors.getFieldError("releaseDate").getDefaultMessage()}</span>
@@ -63,7 +63,7 @@
                 </div>
 
             </div>
-            <button type="submit" class="btn-submit">Spara film</button>
+            <button type="submit" class="btn-submit">Save movie</button>
         </form>
     </div>
 </div>

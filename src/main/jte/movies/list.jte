@@ -2,24 +2,24 @@
 @param org.noob.springbootcrudwebapp.dto.MoviePageDTO moviePage
 
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Filmer — FILMBANKEN</title>
+    <title>Movies — MOVIE BANK</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="app">
     <nav>
-        <a href="/" class="logo"><span>FILM</span>BANKEN</a>
+        <a href="/" class="logo"><span>MOVIE</span>BANK</a>
         <div style="display:flex; gap:0.5rem">
-            <a href="/movies/search" class="btn-search">Sök filmer</a>
-            <a href="/movies/new" class="btn-primary">+ Ny film</a>
+            <a href="/movies/search" class="btn-search">Search movies</a>
+            <a href="/movies/new" class="btn-primary">+ New movie</a>
         </div>
     </nav>
 
-    <div class="page-title">Alla <span>filmer</span></div>
-    <div class="subtitle">${moviePage.getTotalElements()} filmer i databasen</div>
+    <div class="page-title">All <span>movies</span></div>
+    <div class="subtitle">${moviePage.getTotalElements()} movies in database</div>
 
     <div class="movie-grid">
         @for(MovieDTO movie : moviePage.getMovies())
@@ -42,15 +42,15 @@
 
     <div class="pagination">
         @if(moviePage.isHasPrevious())
-            <a href="/movies?page=${moviePage.getCurrentPage() - 1}" class="page-btn">← Föregående</a>
+            <a href="/movies?page=${moviePage.getCurrentPage() - 1}" class="page-btn">← Previous</a>
         @endif
         <span class="page-info">
             ${moviePage.getTotalPages() > 0
-                ? "Sida " + (moviePage.getCurrentPage() + 1) + " av " + moviePage.getTotalPages()
-                : "Inga sidor att visa"}
+                ? "Page " + (moviePage.getCurrentPage() + 1) + " of " + moviePage.getTotalPages()
+                : "No pages to display"}
         </span>
         @if(moviePage.isHasNext())
-            <a href="/movies?page=${moviePage.getCurrentPage() + 1}" class="page-btn">Nästa →</a>
+            <a href="/movies?page=${moviePage.getCurrentPage() + 1}" class="page-btn">Next →</a>
         @endif
     </div>
 

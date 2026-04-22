@@ -490,7 +490,7 @@ input:focus {
     font-variant-numeric: tabular-nums;
 }
 
-/* Klickbara filmkort */
+/* Clickable movie cards */
 a.movie-card {
     text-decoration: none;
     color: inherit;

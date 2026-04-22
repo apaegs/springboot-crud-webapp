@@ -69,7 +69,7 @@ public class MovieController {
     // EDIT FORM
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
-        // GlobalExceptionHandler tar hand om IllegalArgumentException om filmen saknas
+        // GlobalExceptionHandler handles IllegalArgumentException if movie not found
         MovieDTO movieDTO = service.findById(id);
 
         UpdateMovieDTO updateDTO = new UpdateMovieDTO();
@@ -101,7 +101,7 @@ public class MovieController {
                               Model model) {
 
         if (dto.getId() != null && !id.equals(dto.getId())) {
-            result.rejectValue("id", "mismatch", "Sökvägs-ID matchar inte formulär-ID");
+            result.rejectValue("id", "mismatch", "Path ID does not match form ID");
         }
 
         if (result.hasErrors()) {

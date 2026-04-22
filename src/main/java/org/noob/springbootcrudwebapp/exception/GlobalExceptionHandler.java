@@ -21,14 +21,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleConstraintViolation(ConstraintViolationException ex, Model model) {
-        model.addAttribute("errorMessage", "Ogiltig förfrågan: " + ex.getMessage());
+        model.addAttribute("errorMessage", "Invalid request: " + ex.getMessage());
         return "movies/bad-request";
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleIllegalArgument(IllegalArgumentException ex, Model model) {
-        model.addAttribute("errorMessage", "Ogiltig förfrågan: " + ex.getMessage());
+        model.addAttribute("errorMessage", "Invalid request: " + ex.getMessage());
         return "movies/bad-request";
     }
 
@@ -39,9 +39,9 @@ public class GlobalExceptionHandler {
         String message = (cause != null && cause.getMessage() != null) ? cause.getMessage().toLowerCase() : "";
 
         if (message.contains("uk_movie_title_release_date")) {
-            model.addAttribute("errorMessage", "En film med den titeln och det utgivningsdatumet finns redan.");
+            model.addAttribute("errorMessage", "A movie with that title and release date already exists.");
         } else {
-            model.addAttribute("errorMessage", "Databasfel: begäran kunde inte slutföras.");
+            model.addAttribute("errorMessage", "Database error: request could not be completed.");
         }
 
         return "movies/bad-request";

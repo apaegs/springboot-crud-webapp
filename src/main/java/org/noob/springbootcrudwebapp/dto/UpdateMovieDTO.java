@@ -5,8 +5,8 @@ import java.time.LocalDate;
 
 public class UpdateMovieDTO {
 
-    @NotNull(message = "ID saknas")
-    @Positive(message = "ID måste vara positivt")
+    @NotNull(message = "ID is required")
+    @Positive(message = "ID must be positive")
     private Long id;
 
     @NotBlank
